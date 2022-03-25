@@ -1,0 +1,5 @@
+﻿  funcoes.c
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(162,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(198,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(237,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+  Projeto1.vcxproj -> C:\uni\ed\Projeto1\x64\Debug\Projeto1.exe
