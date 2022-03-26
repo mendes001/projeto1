@@ -1,5 +1,14 @@
 ﻿  funcoes.c
-C:\uni\ed\Projeto1\Projeto1\funcoes.c(162,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
-C:\uni\ed\Projeto1\Projeto1\funcoes.c(198,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
-C:\uni\ed\Projeto1\Projeto1\funcoes.c(237,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(24,41): warning C4020: 'malloc': muitos parâmetros reais
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(33,38): warning C4133: 'função': tipos incompatíveis - de 'ListaMaq *' para 'Maquina *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(72,23): warning C4047: '=': 'int' difere em níveis de indireção de 'int *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(78,30): warning C4133: 'função': tipos incompatíveis - de 'ListaOp *' para 'Operacao *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(78,32): warning C4020: 'CriarNodoOp': muitos parâmetros reais
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(177,17): warning C4133: '=': tipos incompatíveis - de 'Maquina *' para 'ListaMaq *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(206,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(242,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(250,48): warning C4047: '>': 'int' difere em níveis de indireção de 'int *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(281,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(69): warning C4715: 'criarOp': nem todos os caminhos de controle retornam um valor
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(75): warning C4716: 'CriarNodoOp': deve retornar um valor
   Projeto1.vcxproj -> C:\uni\ed\Projeto1\x64\Debug\Projeto1.exe

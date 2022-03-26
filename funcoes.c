@@ -12,35 +12,82 @@
 
 #pragma region funcoes/maquinas
 
-ListaMaq* criaMaq(int cod, int tempo) {
-	ListaMaq* newMaq = (ListaMaq*)malloc(sizeof(ListaOp));
-	newMaq->Maq.cod = cod;
-	newMaq->Maq.tempo = tempo;
-	newMaq->next = NULL;
+Maquina* criaMaq(int cod, int tempo) {
+	Maquina* newMaq = (Maquina*)calloc(1,sizeof(Maquina));
+	newMaq->cod = cod;
+	newMaq->tempo = tempo;
+	return newMaq;
 
 	return newMaq;
 }
+ListaMaq* criarNodoListaMaq(Maquina* m) {
+	ListaMaq* newMaq = (ListaMaq*)malloc(1,sizeof(ListaMaq));
+	if (newMaq != NULL)
+	newMaq->Maq.cod = m->cod;
+	newMaq->Maq.tempo = m->tempo;
+	newMaq->next = NULL;
+	return newMaq;
+}
+ListaMaq* InsereMaqListaM(ListaMaq* m, Maquina* newM) {
+	if (newM == NULL) return m;
+	ListaMaq* novo = criarNodoListaMaq(m);
+	if (m == NULL) m = novo;
+	else {
+		novo->next = m;
+		m = novo;
+	}
+	return m;
+}
 
+void mostrarMaquinas(ListaMaq* m) {
+	ListaMaq* aux = m;
+	while (aux) {
+		printf("(%d,%d)\n", m->Maq.cod, m->Maq.tempo);
+	}
+}
 #pragma endregion
 
 #pragma region funcoes/operacoes
 
-ListaOp* criaOp(ListaMaq* h, int id) {
-
-	ListaOp* newOp = (ListaOp*)malloc(sizeof(ListaOp));
-	ListaMaq* newMaq = (ListaMaq*)malloc(sizeof(ListaOp));
-	newOp->listaM = h;
-	newOp->ope.id = id;
-	newOp->next = NULL;
-	
-
-	return newOp;
+//ListaOp* criaOp(ListaMaq* h, int id) {
+//
+//	ListaOp* newOp = (ListaOp*)malloc(sizeof(ListaOp));
+//	ListaMaq* newMaq = (ListaMaq*)malloc(sizeof(ListaOp));
+//	newOp->listaM = h;
+//	newOp->ope.id = id;
+//	newOp->next = NULL;
+//	
+//
+//	return newOp;
+//}
+Operacao* criarOp(int id) {
+	Operacao* aux = (Operacao*)calloc(1,sizeof(Operacao));
+	if (aux != NULL) {
+		aux->id = id;
+		return aux;
+	}
+}
+ListaOp* CriarNodoOp( Operacao* op) {
+	ListaOp* aux = (ListaOp*)calloc(1,sizeof(ListaOp));
+	aux->ope.id = &op->id;
+	aux->listaM = NULL;
+	aux->next = NULL;
+}
+ListaOp* inserirOpLista(ListaOp* h, Operacao* op) {
+	if (h == NULL) return h;
+	ListaOp* new = CriarNodoOp(h, op);
+	if (h == NULL) h = new;
+	else {
+		new->next = h;
+		h = new;
+	}
+	return h;
 }
 
 bool existeOp(ListaOp* h, int id) {
 	if (h == NULL) return false;
 	ListaOp* aux = h;
-	while (aux != NULL) {
+	while (aux) {
 		if (aux->ope.id == id) return true;
 		aux = aux->next;
 	}
@@ -111,7 +158,7 @@ ListaOp* removerOp(ListaOp* h, int id) {
 			auxAnt = aux;
 			aux = aux->next;
 		}
-		if (aux != NULL) {
+		if (aux) {
 			auxAnt->next = aux->next;
 			free(aux);
 		}
@@ -119,44 +166,41 @@ ListaOp* removerOp(ListaOp* h, int id) {
 	return h;
 }
 
-ListaOp* adicionarMaqOp(ListaOp* h, int id, ListaMaq* m) {
-	
+ListaOp* adicionarMaqOp(ListaOp* h, int id, Maquina* m) {
+	if (h == NULL) return NULL;
+	if (m == NULL) return h;
 	ListaOp* aux = ProcurarOp(h,id);
 
-	while (aux->listaM != NULL) {
-		aux->listaM = aux->listaM->next;
+	if (aux) {
+		aux->listaM = InsereMaqListaM(aux->listaM, m);
 	}
 	aux->listaM = m;
 	return h;
 }
 
 ListaOp* ProcurarOp(ListaOp* h, int id) {
-	if (h == NULL) return NULL;
-	else {
-		ListaOp* aux = h;
-		while (aux != NULL) {
-			if (aux->ope.id == id) {
-				return (aux);
-			}
+	ListaOp* aux = h;
+		while (aux) {
+			if (aux->ope.id == id)return (aux);
 			aux = aux->next;
 		}
 		return NULL;
 	}
-}
-	
-void mostraMaquinasOp(ListaOp* h) {
-	ListaOp* aux = h;
-	while (aux != NULL) {
-		printf("Operacao %d:(maquina,tempo)\n ", aux->ope.id);
-		while (aux->listaM != NULL) {
-			printf("(%d,%d)\n", aux->listaM->Maq.cod, aux->listaM->Maq.tempo);
-			aux->listaM = aux->listaM->next;
-		}
-		aux = aux->next;
-	
-	}
 
-}
+//	
+//void mostraMaquinasOp(ListaOp* h) {
+//	ListaOp* aux = h;
+//	while (aux) {
+//		printf("Operacao %d:(maquina,tempo)\n ", aux->ope.id);
+//		while (aux->listaM) {
+//			printf("(%d,%d)\n", aux->listaM->Maq.cod, aux->listaM->Maq.tempo);
+//			aux->listaM = aux->listaM->next;
+//		}
+//		aux = aux->next;
+//	
+//	}
+//
+//}
 
 int miniTempo(ListaOp* h) {
 	if (h == NULL) return NULL;
@@ -165,8 +209,8 @@ int miniTempo(ListaOp* h) {
 
 	ListaOp* aux = h;
 	ListaMaq* auxm = h->listaM;
-	while (aux != NULL) { 
-		while (auxm->next != NULL) {
+	while (aux) { 
+		while (auxm) {
 		if (auxm->Maq.tempo < auxm->next->Maq.tempo) {
 				tempo = auxm->Maq.tempo;
 				auxm = auxm->next;
@@ -191,7 +235,7 @@ void miniTempoeMaq(ListaOp* h) {
 	int x = miniTempo(h);
 	printf("o tempo minimo para completer o job é: %d\n", x);
 	printf("Operacoes: ");
-    mostraMaquinasOp(h);
+	mostrarMaquinas(h->listaM);
 }
 
 int maxTempo(ListaOp* h) {
@@ -201,9 +245,9 @@ int maxTempo(ListaOp* h) {
 
 	ListaOp* aux = h;
 	ListaMaq* auxm = h->listaM;
-	while (aux != NULL) {
-		while (auxm->next != NULL) {
-			if (auxm->Maq.tempo > auxm->next->Maq.tempo) {
+	while (aux) {
+		while (auxm ) {
+			if (auxm->Maq.tempo > &auxm->next->Maq.tempo) {
 				tempo = auxm->Maq.tempo;
 				auxm = auxm->next;
 			}
@@ -228,7 +272,7 @@ void maxTempoeMaq(ListaOp* h) {
 	int x = maxTempo(h);
 	printf("o tempo minimo para completer o job é: %d\n", x);
 	printf("Operacoes: ");
-	mostraMaquinasOp(h);
+	mostrarMaqOp(h);
 }
 
 
@@ -242,7 +286,7 @@ int mediaTempo(ListaOp* h) {
 
 	ListaOp* aux = h;
 	while (aux != NULL) {
-		while (aux->listaM != NULL) {
+		while (aux->listaM) {
 			tempo = aux->listaM->Maq.tempo;
 			count++;
 		}
@@ -258,7 +302,16 @@ void mediaTempoeMaq(ListaOp* h) {
 	int x = mediaTempo(h);
 	printf("o tempo minimo para completer o job é: %d\n", x);
 	printf("Operacoes: ");
-	mostraMaquinasOp(h);
+	mostrarMaqOp(h);
+}
+
+void mostrarMaqOp(ListaOp* h) {
+	ListaOp* aux = h;
+	while (aux) {
+		printf("Operacao %d:(maquina,tempo) ", h->ope.id);
+		mostrarMaquinas(aux->listaM);
+		aux = aux->next;
+	}
 }
 
 #pragma endregion

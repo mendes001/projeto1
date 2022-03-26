@@ -26,6 +26,10 @@ typedef struct ListaMaq {
 extern ListaMaq* maqhead;
 #pragma region funcoes 
 
-ListaMaq* criaMaq(int cod, int tempo);
+Maquina* criaMaq(int cod, int tempo);
+void mostrarMaquinas(ListaMaq* m);
+ListaMaq* InsereMaqListaM(ListaMaq* m, Maquina* newM);
+ListaMaq* criarNodoListaMaq(Maquina* m);
+
 
 #pragma endregion
