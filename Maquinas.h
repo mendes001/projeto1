@@ -32,4 +32,5 @@ ListaMaq* InsereMaqListaM(ListaMaq* m, Maquina* newM);
 ListaMaq* criarNodoListaMaq(Maquina* m);
 
 
+
 #pragma endregion

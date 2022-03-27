@@ -11,13 +11,12 @@
 
 #pragma region structs
 
-typedef struct Operacao {
-	int id;
-}Operacao;
 
 typedef struct ListaOp {
+	
+	int id;
 	struct ListaMaq* listaM;
-	struct Operacao ope;
+	
 	struct ListaOp* next;
 }ListaOp;
 
@@ -28,9 +27,9 @@ extern ListaOp* ophead;
 #pragma region funcoes
 
 ListaOp* criaOp(ListaMaq* h, int id); //feita	
-Operacao* criarOp(int id);
-ListaOp* CriarNodoOp(Operacao* op);
-ListaOp* inserirOpLista(ListaOp* h, Operacao* op);
+ListaOp* criarOp(int id);
+//ListaOp* CriarNodoOp(ListaOp* op);
+ListaOp* inserirOpLista(ListaOp* h, int id);
 ListaOp* InsereOpInicio(ListaOp* h, ListaOp* novo);//feita
 ListaOp* InserirPorId(ListaOp* h, ListaOp* novo);//feita
 ListaOp* removerOp(ListaOp* h, int id); //feita
@@ -38,7 +37,7 @@ ListaOp* adicionarMaqOp(ListaOp* h,int id, Maquina* m);//????
 ListaOp* ProcurarOp(ListaOp* h, int id);//feita
 bool existeOp(ListaOp* h, int id); //???
 bool gravarOp(char* nomeFicheiro, ListaOp* h);//????
-Operacao* lerFicherio(char* nomeFicheiro);//????
+ListaOp* lerFicherio(char* nomeFicheiro);//????
 int miniTempo(ListaOp* h);
 void miniTempoeMaq(ListaOp* h);
 int maxTempo(ListaOp* h);

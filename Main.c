@@ -21,33 +21,28 @@ void main() {
 	Maquina* m4 = criaMaq(4, 5);
 	Maquina* m5 = criaMaq(5, 10);
 
-	maqhead = InsereMaqListaM(maqhead, m1);
-	maqhead = InsereMaqListaM(maqhead, m2); 
-	maqhead = InsereMaqListaM(maqhead, m3);
-	maqhead = InsereMaqListaM(maqhead, m4);
-	maqhead = InsereMaqListaM(maqhead, m5);
+	
 
 
 
 
-
-	Operacao* o1 = criarOp(1);
-	Operacao* o2 = criarOp(2);
-	Operacao* o3 = criarOp(3);
-	Operacao* op4 = criarOp(4);
 
 	
-	ophead = inserirOpLista(ophead, o1);
-	ophead = inserirOpLista(ophead, o2);
-	ophead = inserirOpLista(ophead, o3);
-	ophead = inserirOpLista(ophead, op4);
+	ophead = inserirOpLista(ophead, 1);
+	ophead = inserirOpLista(ophead, 2);
+	ophead = inserirOpLista(ophead, 3);
+	ophead = inserirOpLista(ophead, 4);
 
-	ophead = adicionarMaqOp(ophead, 1, maqhead);
+	ophead = adicionarMaqOp(ophead, 2, m1);
+	ophead = adicionarMaqOp(ophead, 2, m2);
+	ophead = adicionarMaqOp(ophead, 2, m3);
+	ophead = adicionarMaqOp(ophead, 2, m4);
 
-	mostrarMaquinas(o1);
-
-
+	
 	mostrarMaqOp(ophead);
+
+
+	
 	
 	int x = maxTempo(ophead);
 	printf("%d", x);
