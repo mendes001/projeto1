@@ -1,5 +1,5 @@
 /**
-* Author: Mendes
+* Author: Tiago
 * Email: a23490@alunos.ipca.pt
 * Date: 14-03-2022
 * Desc:funcoes
@@ -12,36 +12,64 @@
 
 #pragma region funcoes/maquinas
 
-Maquina* criaMaq(int cod, int tempo) {
-	Maquina* maq = (Maquina*)malloc(sizeof(Maquina));
-	 maq->cod = cod;
+ListaMaq* criaMaq(int cod, int tempo) {
+	ListaMaq* maq = (ListaMaq*)calloc(1,sizeof( ListaMaq));
+	maq->cod = cod;
 	maq->tempo = tempo;
-	return maq;
+	maq->next = NULL;
 
 	return maq;
 }
-ListaMaq* criarNodoListaMaq(Maquina* m) {
-	ListaMaq* Maq = (ListaMaq*)malloc(sizeof(ListaMaq));
-	Maq->Maq.cod = m->cod;
-	Maq->Maq.tempo = m->tempo;
-	Maq->next = NULL;
-	return Maq;
+//ListaMaq* criarNodoListaMaq(Maquina* m) {
+//	if (m == NULL) return NULL;
+//	else {
+//		ListaMaq* maquina = (ListaMaq*)calloc(1,sizeof(ListaMaq));
+//		maquina->Maq.cod = m->cod;
+//		maquina->Maq.tempo = m->tempo;
+//		maquina->next = NULL;
+//		return maquina;
+//	}
+//}
+bool existeMaq(ListaMaq* m, int cod) {
+
+	if (m == NULL) return false;
+	ListaMaq* aux = m;
+	while (aux) {
+		if (aux->cod == cod) return true;
+		aux = aux->next;
+	}
+	return false;
 }
-ListaMaq* InsereMaqListaM(ListaMaq* m, Maquina* newM) {
-	if (newM == NULL) return m;
-	ListaMaq* novo = criarNodoListaMaq(m);
-	if (m == NULL) m = novo;
-	else {
-		novo->next = m;
-		m = novo;
+
+
+
+ListaMaq* InsereMaqLista(ListaMaq* m, ListaMaq* newM) {
+	if (newM == NULL) return m;	//Verificar se apontadores são válidos
+
+	//Verificar se o novo jogo já existe!!!
+	if (existeMaq(m, newM->cod)) return m;	//se existir não insere!
+
+	if (m == NULL)		//Lista está vazia
+	{
+		m = newM;
+	}
+	else
+	{
+		newM->next = m;	//aponta para onde "h" está a apontar
+		m = newM;
 	}
 	return m;
 }
 
+
 void mostrarMaquinas(ListaMaq* m) {
 	ListaMaq* aux = m;
-	while (aux) {
-		printf("(%d,%d)\n", m->Maq.cod, m->Maq.tempo);
+	if (aux == NULL) " ";
+	else {
+		while (aux) {
+			printf("(%d,%d)\n", aux->cod, aux->tempo);
+			aux = aux->next;
+		}
 	}
 }
 #pragma endregion
@@ -69,13 +97,15 @@ ListaOp* criarOp(int id) {
 	}
 }
 
-ListaOp* inserirOpLista(ListaOp* h, int id) {
-	if (id == NULL) return h;
-	ListaOp* new = criarOp(id);
-	if (h == NULL) h = new;
+ListaOp* inserirOpLista(ListaOp* h, ListaOp* nova) {
+	if (nova == NULL) return h;
+	if (existeOp(h, nova->id)) return h;
+	if (h = NULL) {
+		h = nova;
+	}
 	else {
-		new->next = h;
-		h = new;
+		nova->next = h;
+		h = nova;
 	}
 	return h;
 }
@@ -110,12 +140,13 @@ ListaOp* InsereOpInicio(ListaOp* h, ListaOp* novo) {
 }
 
 ListaOp* InserirPorId(ListaOp* h, ListaOp* novo) {
+	ListaOp* aux = h;
 
-	if (existeOp(h, novo->id)) return h;
+	if (existeOp(aux, novo->id)) return aux;
 
-	if (h == NULL)
+	if (aux == NULL)
 	{
-		h = novo;
+		aux = novo;
 	}
 	else
 	{
@@ -135,7 +166,7 @@ ListaOp* InserirPorId(ListaOp* h, ListaOp* novo) {
 			novo->next = aux;
 		}
 	}
-	return h;
+	return aux;
 }
 ListaOp* removerOp(ListaOp* h, int id) {
 
@@ -162,22 +193,26 @@ ListaOp* removerOp(ListaOp* h, int id) {
 	return h;
 }
 
-ListaOp* adicionarMaqOp(ListaOp* h, int id, Maquina* m) {
+ListaOp* adicionarMaqOp(ListaOp* h, int id, ListaMaq* m) {
 	if (h == NULL) return NULL;
 	if (m == NULL) return h;
 	ListaOp* aux = ProcurarOp(h,id);
 
-	if (aux) {
-		aux->listaM = InsereMaqListaM(aux->listaM, m);
+	if (aux != NULL) {
+		aux->listaM = InsereMaqLista(aux->listaM, m);
+		
 	}
 	return h;
+	
 }
 
 ListaOp* ProcurarOp(ListaOp* h, int id) {
-	ListaOp* aux = h;
-		while (aux) {
-			if (aux->id == id)return (aux);
-			aux = aux->next;
+	ListaOp* auxop = h;
+		while (auxop) {
+			if (auxop->id == id) return auxop;
+			else {
+				auxop = auxop->next;
+			}
 		}
 		return NULL;
 	}
@@ -199,26 +234,15 @@ ListaOp* ProcurarOp(ListaOp* h, int id) {
 
 int miniTempo(ListaOp* h) {
 	if (h == NULL) return NULL;
-	int tempo = 0;
-	int minimo = 2;
+	int tempo = h->listaM->tempo;
+	int minimo = 0;
 
 	ListaOp* aux = h;
-	ListaMaq* auxm = h->listaM;
-	while (aux) { 
-		while (auxm) {
-		if (auxm->Maq.tempo < auxm->next->Maq.tempo) {
-				tempo = auxm->Maq.tempo;
-				auxm = auxm->next;
-			}
-			else {
-				tempo = auxm->next->Maq.tempo;
-				auxm = auxm->next;
-			}
-			
-			
-		minimo += tempo;
+	while (aux != NULL) { 
+		while (aux->listaM != NULL) {
+			if (aux->listaM->tempo < tempo) tempo = aux->listaM->tempo;
 		}
-		
+		minimo += tempo;
 		aux = aux->next;
 		
     }
@@ -241,8 +265,8 @@ int maxTempo(ListaOp* h) {
 
 	while (aux) {
 		while (aux->listaM) {
-			if (aux->listaM->Maq.tempo > aux->listaM->next->Maq.tempo) {
-				tempo = aux->listaM->Maq.tempo;
+			if (aux->listaM->tempo > aux->listaM->next->tempo) {
+				tempo = aux->listaM->tempo;
 				aux->listaM = aux->listaM->next;
 			}
 			else {
@@ -281,7 +305,7 @@ int mediaTempo(ListaOp* h) {
 	ListaOp* aux = h;
 	while (aux != NULL) {
 		while (aux->listaM) {
-			tempo = aux->listaM->Maq.tempo;
+			tempo = aux->listaM-tempo;
 			count++;
 		}
 		tempo = tempo / count;
@@ -301,8 +325,9 @@ void mediaTempoeMaq(ListaOp* h) {
 
 void mostrarMaqOp(ListaOp* h) {
 	ListaOp* aux = h;
-	while (aux) {
-		printf("Operacao %d:(maquina,tempo) ", h->id);
+	if (aux == NULL) printf("Lista vazia.");
+	while (aux != NULL) {
+		printf("Operacao %d:(maquina,tempo)\n ", aux->id);
 		mostrarMaquinas(aux->listaM);
 		aux = aux->next;
 	}

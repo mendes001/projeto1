@@ -1,8 +1,8 @@
 /**
-* Author: Mendes
+* Author: Tiago
 * Email: a23490@alunos.ipca.pt
 * Date: 14-03-2022
-* Desc: Declaracao de operacoes e lista de operacoes
+* Desc: Maquinas
 * ???
 */
 
@@ -12,13 +12,15 @@
 
 #pragma region structs
 
-typedef struct Maquina {
-	int cod;
-	int tempo;
-}Maquina;
+//typedef struct Maquina {
+//	int cod;
+//	int tempo;
+//}Maquina;
 
 typedef struct ListaMaq {
-	struct Maquina Maq;
+
+	int cod;
+	int tempo;
 	struct ListaMaq* next;
 }ListaMaq;
 
@@ -26,10 +28,11 @@ typedef struct ListaMaq {
 extern ListaMaq* maqhead;
 #pragma region funcoes 
 
-Maquina* criaMaq(int cod, int tempo);
+ListaMaq* criaMaq(int cod, int tempo);
 void mostrarMaquinas(ListaMaq* m);
-ListaMaq* InsereMaqListaM(ListaMaq* m, Maquina* newM);
-ListaMaq* criarNodoListaMaq(Maquina* m);
+ListaMaq* InsereMaqLista(ListaMaq* m, ListaMaq* newM);
+//ListaMaq* criarNodoListaMaq(Maquina* m);
+bool existeMaq(ListaMaq* m, int cod);
 
 
 
