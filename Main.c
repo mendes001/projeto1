@@ -34,6 +34,7 @@ void main() {
 	
 	ophead = InsereOpInicio(ophead, o1);
 	ophead = InsereOpInicio(ophead, o2);
+	ophead = InsereOpInicio(ophead, o3);
 
 
 
@@ -51,12 +52,15 @@ void main() {
 	ophead = adicionarMaqOp(ophead, 1, m4);
 	ophead = adicionarMaqOp(ophead, 2, m1);
 	ophead = adicionarMaqOp(ophead, 2, m2);
+	ophead = adicionarMaqOp(ophead, 3, m5);
 
-	
 	mostrarMaqOp(ophead);
+	int x = mediaTempo(ophead);
+	printf("o minimo tempo para completar o job e: %d\n", x);
+	mostrarMaqOp(ophead);
+	
 
-	/*int x = mediaTempo(ophead);*/
-	/*printf("%d", x);*/
+	/*maxTempoeMaq(ophead);*/
 	
 	//mediaTempoeMaq(headlista);
 	//int x = miniTempo(ophead);

@@ -234,19 +234,31 @@ ListaOp* ProcurarOp(ListaOp* h, int id) {
 
 int miniTempo(ListaOp* h) {
 	if (h == NULL) return NULL;
-	int tempo = h->listaM->tempo;
-	int minimo = 0;
-
 	ListaOp* aux = h;
-	while (aux != NULL) { 
+	int tempo = aux->listaM->tempo;
+	int minimo = 0;
+	
+
+	while (aux) {
 		while (aux->listaM != NULL) {
-			if (aux->listaM->tempo < tempo) tempo = aux->listaM->tempo;
+			if (aux->listaM->tempo < aux->listaM->next) {
+				tempo = aux->listaM->tempo;
+				aux->listaM = aux->listaM->next;
+			}
+			else {
+				
+				aux->listaM = aux->listaM->next;
+			}
+
+
+
 		}
 		minimo += tempo;
 		aux = aux->next;
-		
-    }
+
+	}
 	return minimo;
+
 
 }
 
@@ -259,25 +271,24 @@ void miniTempoeMaq(ListaOp* h) {
 
 int maxTempo(ListaOp* h) {
 	if (h == NULL) return NULL;
-	int tempo = 0;
-	int maximo = 0;
 	ListaOp* aux = h;
+	
+	int tempo = aux->listaM->tempo;
+	int maximo = 0;
+	
 
 	while (aux) {
-		while (aux->listaM) {
-			if (aux->listaM->tempo > aux->listaM->next->tempo) {
-				tempo = aux->listaM->tempo;
-				aux->listaM = aux->listaM->next;
-			}
-			else {
-				tempo = aux->next->listaM->next;
-				aux->listaM = aux->listaM->next;
-			}
+		while (aux->listaM != NULL) {
+				if (aux->listaM->tempo > aux->listaM->next) {
+					tempo = aux->listaM->tempo;
+					aux->listaM = aux->listaM->next;
+				}
+				else {
 
-
-			maximo += tempo;
+					aux->listaM = aux->listaM->next;
+				}
 		}
-
+		maximo += tempo;
 		aux = aux->next;
 
 	}
@@ -288,8 +299,7 @@ int maxTempo(ListaOp* h) {
 
 void maxTempoeMaq(ListaOp* h) {
 	int x = maxTempo(h);
-	printf("o tempo minimo para completer o job é: %d\n", x);
-	printf("Operacoes: ");
+	printf("o tempo maximo para completer o job e: %d\n", x);
 	mostrarMaqOp(h);
 }
 
@@ -303,14 +313,21 @@ int mediaTempo(ListaOp* h) {
 	int count2 = 0;
 
 	ListaOp* aux = h;
-	while (aux != NULL) {
-		while (aux->listaM) {
-			tempo = aux->listaM-tempo;
-			count++;
+	while (aux) {
+		while (aux->listaM != NULL) {
+			if (aux->listaM->tempo == NULL) {
+
+				aux = aux->listaM->next;
+			}
+			else {
+				tempo += aux->listaM->tempo;
+				count++;
+			}
 		}
-		tempo = tempo / count;
+		aux = aux->next;
 		count2++;
 	}
+	tempo = tempo / count;
 	tempo = tempo / count2;
 	return tempo;
 

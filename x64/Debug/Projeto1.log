@@ -1,2 +1,10 @@
-﻿  Main.c
+﻿  funcoes.c
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(236,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(244,46): warning C4047: '<': 'int' difere em níveis de indireção de 'ListaMaq *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(273,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(282,47): warning C4047: '>': 'int' difere em níveis de indireção de 'ListaMaq *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(309,28): warning C4047: 'return': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(318,34): warning C4047: '==': 'int' difere em níveis de indireção de 'void *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(320,28): warning C4133: '=': tipos incompatíveis - de 'ListaMaq *' para 'ListaOp *'
+C:\uni\ed\Projeto1\Projeto1\funcoes.c(98): warning C4715: 'criarOp': nem todos os caminhos de controle retornam um valor
   Projeto1.vcxproj -> C:\uni\ed\Projeto1\x64\Debug\Projeto1.exe
