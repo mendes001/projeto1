@@ -20,31 +20,35 @@ typedef struct ListaOp {
 	struct ListaOp* next;
 }ListaOp;
 
+typedef struct ListaOpFile {
+	int id;
+	struct ListaMaq* listaMaq;
+	
+}ListaOpFile;
+
 #pragma endregion
 
 extern ListaOp* ophead;
 
 #pragma region funcoes
 
-//ListaOp* criaOp(ListaMaq* h, int id); //feita	
+
 ListaOp* criarOp(int id);
-//ListaOp* CriarNodoOp(ListaOp* op);
-ListaOp* inserirOpLista(ListaOp* h, ListaOp* nova);
 ListaOp* InsereOpInicio(ListaOp* h, ListaOp* novo);//feita
-ListaOp* InserirPorId(ListaOp* h, ListaOp* novo);//feita
 ListaOp* removerOp(ListaOp* h, int id); //feita
-ListaOp* adicionarMaqOp(ListaOp* h,int id, ListaMaq* m);//????
+ListaOp* adicionarMaqOp(ListaOp* h,int id, ListaMaq* m);//feita
 ListaOp* ProcurarOp(ListaOp* h, int id);//feita
-bool existeOp(ListaOp* h, int id); //???
+bool existeOp(ListaOp* h, int id); //feita
+int miniTempo(ListaOp* h);//feita
+void miniTempoeMaq(ListaOp* h);//feita
+int maxTempo(ListaOp* h);//feita
+void maxTempoeMaq(ListaOp* h);//feita
+int mediaTempo(ListaOp* h);//feita
+void mediaTempoeMaq(ListaOp* h);//+/- feita, mostra o valor arredondado
+void mostrarMaqOp(ListaOp* h);//feita
 bool gravarOp(char* nomeFicheiro, ListaOp* h);//????
-ListaOp* lerFicherio(char* nomeFicheiro);//????
-int miniTempo(ListaOp* h);
-void miniTempoeMaq(ListaOp* h);
-int maxTempo(ListaOp* h);
-void maxTempoeMaq(ListaOp* h);
-int mediaTempo(ListaOp* h);
-void mediaTempoeMaq(ListaOp* h);
-void mostrarMaqOp(ListaOp* h);
+ListaOp* lerOperacoes(char* nomeFicheiro);//????
+
 
 
 #pragma endregion

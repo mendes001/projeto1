@@ -20,16 +20,7 @@ ListaMaq* criaMaq(int cod, int tempo) {
 
 	return maq;
 }
-//ListaMaq* criarNodoListaMaq(Maquina* m) {
-//	if (m == NULL) return NULL;
-//	else {
-//		ListaMaq* maquina = (ListaMaq*)calloc(1,sizeof(ListaMaq));
-//		maquina->Maq.cod = m->cod;
-//		maquina->Maq.tempo = m->tempo;
-//		maquina->next = NULL;
-//		return maquina;
-//	}
-//}
+
 bool existeMaq(ListaMaq* m, int cod) {
 
 	if (m == NULL) return false;
@@ -40,8 +31,6 @@ bool existeMaq(ListaMaq* m, int cod) {
 	}
 	return false;
 }
-
-
 
 ListaMaq* InsereMaqLista(ListaMaq* m, ListaMaq* newM) {
 	if (newM == NULL) return m;	//Verificar se apontadores são válidos
@@ -61,13 +50,12 @@ ListaMaq* InsereMaqLista(ListaMaq* m, ListaMaq* newM) {
 	return m;
 }
 
-
 void mostrarMaquinas(ListaMaq* m) {
 	ListaMaq* aux = m;
 	if (aux == NULL) " ";
 	else {
 		while (aux) {
-			printf("(%d,%d)\n", aux->cod, aux->tempo);
+			printf("(%d,%d)", aux->cod, aux->tempo);
 			aux = aux->next;
 		}
 	}
@@ -76,17 +64,6 @@ void mostrarMaquinas(ListaMaq* m) {
 
 #pragma region funcoes/operacoes
 
-//ListaOp* criaOp(ListaMaq* h, int id) {
-//
-//	ListaOp* newOp = (ListaOp*)malloc(sizeof(ListaOp));
-//	ListaMaq* newMaq = (ListaMaq*)malloc(sizeof(ListaOp));
-//	newOp->listaM = h;
-//	newOp->ope.id = id;
-//	newOp->next = NULL;
-//	
-//
-//	return newOp;
-//}
 ListaOp* criarOp(int id) {
 	ListaOp* aux = (ListaOp*)calloc(1,sizeof(ListaOp));
 	if (aux != NULL) {
@@ -95,19 +72,6 @@ ListaOp* criarOp(int id) {
 		aux->next = NULL;
 		return aux;
 	}
-}
-
-ListaOp* inserirOpLista(ListaOp* h, ListaOp* nova) {
-	if (nova == NULL) return h;
-	if (existeOp(h, nova->id)) return h;
-	if (h = NULL) {
-		h = nova;
-	}
-	else {
-		nova->next = h;
-		h = nova;
-	}
-	return h;
 }
 
 bool existeOp(ListaOp* h, int id) {
@@ -139,35 +103,6 @@ ListaOp* InsereOpInicio(ListaOp* h, ListaOp* novo) {
 	return h;
 }
 
-ListaOp* InserirPorId(ListaOp* h, ListaOp* novo) {
-	ListaOp* aux = h;
-
-	if (existeOp(aux, novo->id)) return aux;
-
-	if (aux == NULL)
-	{
-		aux = novo;
-	}
-	else
-	{
-		ListaOp* aux = h;
-		ListaOp* auxAnt = NULL;
-		while (aux && aux->id < novo->id) {
-			auxAnt = aux;
-			aux = aux->next;
-		}
-		if (auxAnt == NULL) {
-			novo->next = h;
-			h = novo;
-		}
-		else
-		{
-			auxAnt->next = novo;
-			novo->next = aux;
-		}
-	}
-	return aux;
-}
 ListaOp* removerOp(ListaOp* h, int id) {
 
 	if (h == NULL) return NULL;
@@ -217,39 +152,20 @@ ListaOp* ProcurarOp(ListaOp* h, int id) {
 		return NULL;
 	}
 
-//	
-//void mostraMaquinasOp(ListaOp* h) {
-//	ListaOp* aux = h;
-//	while (aux) {
-//		printf("Operacao %d:(maquina,tempo)\n ", aux->ope.id);
-//		while (aux->listaM) {
-//			printf("(%d,%d)\n", aux->listaM->Maq.cod, aux->listaM->Maq.tempo);
-//			aux->listaM = aux->listaM->next;
-//		}
-//		aux = aux->next;
-//	
-//	}
-//
-//}
-
 int miniTempo(ListaOp* h) {
 	if (h == NULL) return NULL;
 	ListaOp* aux = h;
-	int tempo = aux->listaM->tempo;
 	int minimo = 0;
-	
+
 
 	while (aux) {
-		while (aux->listaM != NULL) {
-			if (aux->listaM->tempo < aux->listaM->next) {
-				tempo = aux->listaM->tempo;
-				aux->listaM = aux->listaM->next;
-			}
-			else {
-				
-				aux->listaM = aux->listaM->next;
-			}
+		int tempo = aux->listaM->tempo;
 
+		ListaMaq* auxm = aux->listaM;
+		while (auxm) {
+
+			if (auxm->tempo < tempo)tempo = auxm->tempo;
+			auxm = auxm->next;
 
 
 		}
@@ -258,96 +174,122 @@ int miniTempo(ListaOp* h) {
 
 	}
 	return minimo;
-
-
 }
 
 void miniTempoeMaq(ListaOp* h) {
+	mostrarMaqOp(h);
 	int x = miniTempo(h);
-	printf("o tempo minimo para completer o job é: %d\n", x);
-	printf("Operacoes: ");
-	mostrarMaquinas(h->listaM);
-}
+	printf("\nO tempo minimo para completer o job e: %d\n", x);
+} 
 
 int maxTempo(ListaOp* h) {
 	if (h == NULL) return NULL;
 	ListaOp* aux = h;
-	
-	int tempo = aux->listaM->tempo;
 	int maximo = 0;
-	
+
 
 	while (aux) {
-		while (aux->listaM != NULL) {
-				if (aux->listaM->tempo > aux->listaM->next) {
-					tempo = aux->listaM->tempo;
-					aux->listaM = aux->listaM->next;
-				}
-				else {
-
-					aux->listaM = aux->listaM->next;
-				}
+		int tempo = aux->listaM->tempo;
+		
+		ListaMaq* auxm = aux->listaM;
+		while (auxm) {
+			
+			 if (auxm->tempo > tempo)tempo = auxm->tempo; 
+			 auxm = auxm->next;
+				
+			
 		}
 		maximo += tempo;
 		aux = aux->next;
 
 	}
 	return maximo;
-
 }
-
 
 void maxTempoeMaq(ListaOp* h) {
-	int x = maxTempo(h);
-	printf("o tempo maximo para completer o job e: %d\n", x);
 	mostrarMaqOp(h);
+	int x = maxTempo(h);
+	printf("\nO tempo maximo para completar o job e: %d\n", x);
+	
 }
-
-
 
 int mediaTempo(ListaOp* h) {
 	if (h == NULL) return NULL;
-	int tempo = 0;
-	int media = 0;
-	int count = 0;
-	int count2 = 0;
-
 	ListaOp* aux = h;
+	int media = 0;
+	
+
+
 	while (aux) {
-		while (aux->listaM != NULL) {
-			if (aux->listaM->tempo == NULL) {
+		int count = 0;
+		int tempo = 0;
+		ListaMaq* auxm = aux->listaM;
+		while (auxm) {
 
-				aux = aux->listaM->next;
-			}
-			else {
-				tempo += aux->listaM->tempo;
-				count++;
-			}
+			tempo += auxm->tempo;
+			count++;
+
+			auxm = auxm->next;
+
 		}
+		
+		media += tempo/count;
 		aux = aux->next;
-		count2++;
-	}
-	tempo = tempo / count;
-	tempo = tempo / count2;
-	return tempo;
 
+	}
+	return media;
 }
 
 void mediaTempoeMaq(ListaOp* h) {
-	int x = mediaTempo(h);
-	printf("o tempo minimo para completer o job é: %d\n", x);
-	printf("Operacoes: ");
 	mostrarMaqOp(h);
+	int x = mediaTempo(h);
+	printf("\nO tempo medio para completer o job e: %d\n", x);
+
+
 }
 
 void mostrarMaqOp(ListaOp* h) {
 	ListaOp* aux = h;
 	if (aux == NULL) printf("Lista vazia.");
 	while (aux != NULL) {
-		printf("Operacao %d:(maquina,tempo)\n ", aux->id);
+		printf("\nOperacao %d:(maquina,tempo)\n ", aux->id);
 		mostrarMaquinas(aux->listaM);
 		aux = aux->next;
 	}
+}
+
+bool gravarOp(char* nomeFicheiro, ListaOp* h) {
+	FILE* fp;
+
+	if (h == NULL) return false;
+	if ((fp = fopen(nomeFicheiro, "wb")) == NULL) return false;
+	//grava n registos no ficheiro
+	ListaOp* aux = h;
+	ListaOpFile auxOp;	//para gravar em ficheiro!
+	while (aux) {		//while(aux!=NULL)
+		//Colocar no registo de ficheiro a inf que está no registo de memória
+		auxOp.id = aux->id;
+		auxOp.listaMaq = aux->listaM;
+		fwrite(&auxOp, sizeof(ListaOpFile), 1, fp);
+		aux = aux->next;
+	}
+	fclose(fp);
+	return true;
+}
+ListaOp* lerOperacoes(char* nomeFicheiro) {
+	FILE* fp;
+	ListaOp* h = NULL;
+	ListaOp* aux;
+
+	if ((fp = fopen(nomeFicheiro, "rb")) == NULL) return NULL;
+
+	ListaOpFile auxOp;
+	while (fread(&auxOp, sizeof(ListaOpFile), 1, fp)) {
+		aux = criarOp(auxOp.id);
+		h = InsereOpInicio(h, aux);
+	}
+	fclose(fp);
+	return h;
 }
 
 #pragma endregion

@@ -13,58 +13,42 @@
 void main() {
 	
 	ListaOp* ophead = NULL;
-	ListaMaq* maqhead = NULL;
 
 	ListaMaq* m1 = criaMaq(1, 5);
-	ListaMaq* m2 = criaMaq(2, 3);
-	ListaMaq* m3 = criaMaq(3, 6);
-	ListaMaq* m4 = criaMaq(4, 5);
-	ListaMaq* m5 = criaMaq(5, 10);
+	ListaMaq* m2 = criaMaq(2, 4);
+	ListaMaq* m3 = criaMaq(4, 7);
+	ListaMaq* m4 = criaMaq(3, 6);
+	ListaMaq* m5 = criaMaq(5, 4);
+	ListaMaq* m6 = criaMaq(6, 9);
+	ListaMaq* m7 = criaMaq(7, 5);
+	ListaMaq* m8 = criaMaq(8, 12);
 
 	ListaOp* o1 = criarOp(1);
 	ListaOp* o2 = criarOp(2);
 	ListaOp* o3 = criarOp(3);
 
-
-
-
-
-
-	
-	
 	ophead = InsereOpInicio(ophead, o1);
 	ophead = InsereOpInicio(ophead, o2);
 	ophead = InsereOpInicio(ophead, o3);
 
-
-
-	/*ophead = inserirOpLista(ophead, o2);
-	ophead = inserirOpLista(ophead, o3);*/
-
-
-
-
-	/*o1->listaM = InsereMaqLista(o1, m2);
-	o1->listaM = InsereMaqLista(o1, m1);
-	o1->listaM = InsereMaqLista(o1, m3);*/
-
 	ophead = adicionarMaqOp(ophead, 1, m3);
 	ophead = adicionarMaqOp(ophead, 1, m4);
+	ophead = adicionarMaqOp(ophead, 2, m8);
 	ophead = adicionarMaqOp(ophead, 2, m1);
 	ophead = adicionarMaqOp(ophead, 2, m2);
+	ophead = adicionarMaqOp(ophead, 3, m7); 
+	ophead = adicionarMaqOp(ophead, 3, m6);
 	ophead = adicionarMaqOp(ophead, 3, m5);
 
-	mostrarMaqOp(ophead);
-	int x = mediaTempo(ophead);
-	printf("o minimo tempo para completar o job e: %d\n", x);
-	mostrarMaqOp(ophead);
+	ophead = removerOp(ophead, 3);
+	
+	maxTempoeMaq(ophead);
+	printf("\n-------------------\n");
+	miniTempoeMaq(ophead);
+	printf("\n-------------------\n");
+	mediaTempoeMaq(ophead);
 	
 
-	/*maxTempoeMaq(ophead);*/
-	
-	//mediaTempoeMaq(headlista);
-	//int x = miniTempo(ophead);
-	//mostraMaquinasOp(ophead);
 
 	
 
