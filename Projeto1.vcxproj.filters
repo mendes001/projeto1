@@ -21,12 +21,27 @@
     <ClInclude Include="Maquinas.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="ListaG.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Jobs.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="funcoes.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Main.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="opera.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="maq.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="jobs.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
